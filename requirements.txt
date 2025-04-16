@@ -1,7 +1,4 @@
-
 fastapi==0.95.1
 pydantic==1.10.7
 python-dotenv==1.0.0
-smtplib
-email
 uvicorn==0.22.0
