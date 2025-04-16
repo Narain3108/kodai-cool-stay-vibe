@@ -14,21 +14,16 @@ const rooms: RoomSlide[] = [
   {
     id: 1,
     name: "Family Room",
-    image: "https://images.unsplash.com/photo-1566665797739-1674de7a421a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80",
+    image: "/family.jpeg",
     description: "Spacious room perfect for families, featuring comfortable beds and modern amenities."
   },
   {
     id: 2,
     name: "Suite Room",
-    image: "https://images.unsplash.com/photo-1590490360182-c33d57733427?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80",
+    image: "/suite.jpeg",
     description: "Luxurious suite with separate living area and premium furnishings for ultimate comfort."
   },
-  {
-    id: 3,
-    name: "Deluxe Room",
-    image: "https://images.unsplash.com/photo-1618773928121-c32242e63f39?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
-    description: "Elegant room with stunning views and a cozy atmosphere for a relaxing stay."
-  }
+ 
 ];
 
 const RoomCarousel = () => {
@@ -108,12 +103,7 @@ const RoomCarousel = () => {
             <div className="absolute bottom-0 left-0 right-0 p-6 md:p-10 text-white">
               <h3 className="text-2xl md:text-3xl font-bold mb-2">{rooms[currentIndex].name}</h3>
               <p className="mb-4 text-lg max-w-lg">{rooms[currentIndex].description}</p>
-              <Button 
-                className="bg-hotel-teal hover:bg-hotel-teal/90"
-                onClick={scrollToRooms}
-              >
-                Book Now
-              </Button>
+           
             </div>
           </div>
           

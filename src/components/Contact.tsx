@@ -1,3 +1,4 @@
+'use client';
 
 import { useState, useRef, useEffect } from 'react';
 import { MapPin, Phone, Mail, Clock, Send } from 'lucide-react';
@@ -13,35 +14,35 @@ const Contact = () => {
   const [message, setMessage] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
+  const formRef = useRef<HTMLDivElement>(null);
+  const [isFormVisible, setIsFormVisible] = useState(false);
   const { toast } = useToast();
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setIsVisible(true);
+          setIsFormVisible(true);
           observer.unobserve(entry.target);
         }
       },
       { threshold: 0.1 }
     );
 
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
+    if (formRef.current) {
+      observer.observe(formRef.current);
     }
 
     return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
+      if (formRef.current) {
+        observer.unobserve(formRef.current);
       }
     };
   }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // Form validation
+
     if (!name || !email || !message) {
       toast({
         title: "Error",
@@ -50,8 +51,7 @@ const Contact = () => {
       });
       return;
     }
-    
-    // Email validation
+
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       toast({
@@ -61,41 +61,57 @@ const Contact = () => {
       });
       return;
     }
-    
-    // Submit form
+
     setIsSubmitting(true);
-    
-    // Simulate API call
-    setTimeout(() => {
-      toast({
-        title: "Success!",
-        description: "Your message has been sent. We'll get back to you soon!",
+
+    try {
+      const res= await fetch('http://localhost:8000/send', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, message, })
       });
-      
-      // Reset form
-      setName('');
-      setEmail('');
-      setMessage('');
+
+      const result = await res.json();
+
+      if (res.ok) {
+        toast({
+          title: "Success!",
+          description: "Your message has been sent. We'll get back to you soon!",
+        });
+        setName('');
+        setEmail('');
+        setMessage('');
+      } else {
+        toast({
+          title: "Error",
+          description: result.error || "Something went wrong. Please try again.",
+          variant: "destructive"
+        });
+      }
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to send message. Please try again later.",
+        variant: "destructive"
+      });
+    } finally {
       setIsSubmitting(false);
-    }, 1500);
+    }
   };
 
   return (
     <section id="contact" ref={sectionRef} className="py-16 md:py-24 bg-hotel-beige">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className={`text-3xl md:text-4xl font-bold mb-4 text-hotel-teal ${isVisible ? 'animate-fade-in' : 'opacity-0'}`}>
-            Contact Us
-          </h2>
-          <div className={`h-1 w-20 bg-hotel-orange mx-auto mb-6 ${isVisible ? 'animate-fade-in' : 'opacity-0'}`} style={{ animationDelay: '0.2s' }}></div>
-          <p className={`text-lg max-w-2xl mx-auto ${isVisible ? 'animate-fade-in' : 'opacity-0'}`} style={{ animationDelay: '0.4s' }}>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-hotel-teal">Contact Us</h2>
+          <div className="h-1 w-20 bg-hotel-orange mx-auto mb-6"></div>
+          <p className="text-lg max-w-2xl mx-auto">
             Have questions or need more information? Reach out to us and we'll be happy to assist you.
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-          {/* Contact Form */}
-          <div className={`${isVisible ? 'animate-fade-in' : 'opacity-0'}`} style={{ animationDelay: '0.6s' }}>
+          <div ref={formRef} className={`${isFormVisible ? 'animate-fade-in' : 'opacity-0'}`}>
             <div className="bg-white p-8 rounded-lg shadow-md">
               <h3 className="text-2xl font-bold mb-6 text-hotel-teal">Send Us a Message</h3>
               <form onSubmit={handleSubmit} className="space-y-4">
@@ -109,7 +125,7 @@ const Contact = () => {
                     className="border-hotel-teal/30 focus:border-hotel-teal"
                   />
                 </div>
-                
+
                 <div className="space-y-2">
                   <Label htmlFor="contact-email">Your Email</Label>
                   <Input
@@ -121,7 +137,7 @@ const Contact = () => {
                     className="border-hotel-teal/30 focus:border-hotel-teal"
                   />
                 </div>
-                
+
                 <div className="space-y-2">
                   <Label htmlFor="contact-message">Your Message</Label>
                   <Textarea
@@ -132,7 +148,7 @@ const Contact = () => {
                     className="border-hotel-teal/30 focus:border-hotel-teal min-h-[150px]"
                   />
                 </div>
-                
+
                 <Button
                   type="submit"
                   disabled={isSubmitting}
@@ -156,9 +172,10 @@ const Contact = () => {
               </form>
             </div>
           </div>
-          
-          {/* Contact Information */}
-          <div className={`${isVisible ? 'animate-fade-in' : 'opacity-0'}`} style={{ animationDelay: '0.8s' }}>
+
+          {/* Contact Info + Map (unchanged) */}
+            {/* Contact Information */}
+      
             <div className="h-full flex flex-col">
               <div className="bg-hotel-teal text-white p-8 rounded-lg shadow-md mb-8">
                 <h3 className="text-2xl font-bold mb-6">Contact Information</h3>
@@ -212,7 +229,6 @@ const Contact = () => {
               </div>
             </div>
           </div>
-        </div>
       </div>
     </section>
   );

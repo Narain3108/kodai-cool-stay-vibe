@@ -35,7 +35,7 @@ const About = () => {
           <div className={`relative ${isVisible ? 'animate-fade-in' : 'opacity-0'}`} style={{ animationDelay: '0.2s' }}>
             <div className="bg-hotel-orange/20 absolute inset-0 -top-6 -left-6 rounded-lg"></div>
             <img
-              src="https://images.unsplash.com/photo-1584132915807-fd1f5fbc078f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80"
+              src="/about.jpeg"
               alt="Kodai Cool Stay Exterior"
               className="w-full h-[500px] object-cover rounded-lg shadow-lg relative z-10"
             />
@@ -48,7 +48,7 @@ const About = () => {
             </h2>
             <div className={`h-1 w-20 bg-hotel-orange mb-8 ${isVisible ? 'animate-fade-in' : 'opacity-0'}`} style={{ animationDelay: '0.6s' }}></div>
             <p className={`text-lg mb-6 ${isVisible ? 'animate-fade-in' : 'opacity-0'}`} style={{ animationDelay: '0.8s' }}>
-              Nestled in the serene hills, Kodai Cool Stay is a haven of tranquility and luxury. Established in 2010, our retreat offers a perfect blend of modern comfort and natural beauty, making it an ideal escape from the bustle of city life.
+              Nestled in the serene hills, Kodai Cool Stay is a haven of tranquility and luxury.Our retreat offers a perfect blend of modern comfort and natural beauty, making it an ideal escape from the bustle of city life.
             </p>
             <p className={`text-lg mb-6 ${isVisible ? 'animate-fade-in' : 'opacity-0'}`} style={{ animationDelay: '1s' }}>
               Our hotel is designed to provide an immersive experience where guests can reconnect with nature while enjoying premium amenities and personalized service that caters to their every need.

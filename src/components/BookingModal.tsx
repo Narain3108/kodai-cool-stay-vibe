@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from './ui/button';
@@ -22,35 +21,52 @@ const BookingModal = ({ isOpen, onClose, roomName }: BookingModalProps) => {
   const [isSuccess, setIsSuccess] = useState(false);
   const { toast } = useToast();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // Validate form
-    if (!name || !phone) {
+
+    if (!name.trim() || !phone.trim()) {
       toast({
-        title: "Error",
-        description: "Please fill in all required fields.",
+        title: "Missing Required Fields",
+        description: "Please provide both your name and phone number.",
         variant: "destructive"
       });
       return;
     }
-    
-    // Simulate form submission
+
     setIsSubmitting(true);
-    
-    setTimeout(() => {
+
+    try {
+      const response= await fetch('http://localhost:8000/send-booking', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ name, phone, message, })
+            });
+      const result = await response.json();
+
+      if (response.ok) {
+        setIsSuccess(true);
+        toast({ title: "Booking Sent", description: result.message || "Your request was submitted successfully!" });
+
+        setTimeout(() => {
+          setName('');
+          setPhone('');
+          setMessage('');
+          setIsSuccess(false);
+          onClose();
+        }, 3000);
+      } else {
+        throw new Error(result.message || 'Unknown error occurred');
+      }
+    } catch (err: any) {
+      console.error("Booking Error:", err);
+      toast({
+        title: "Booking Failed",
+        description: err.message || "Something went wrong. Please try again later.",
+        variant: "destructive"
+      });
+    } finally {
       setIsSubmitting(false);
-      setIsSuccess(true);
-      
-      // Reset form after 3 seconds
-      setTimeout(() => {
-        setName('');
-        setPhone('');
-        setMessage('');
-        setIsSuccess(false);
-        onClose();
-      }, 3000);
-    }, 1500);
+    }
   };
 
   return (
@@ -70,10 +86,9 @@ const BookingModal = ({ isOpen, onClose, roomName }: BookingModalProps) => {
                   onChange={(e) => setName(e.target.value)}
                   placeholder="Your full name"
                   required
-                  className="border-hotel-teal/30 focus:border-hotel-teal"
                 />
               </div>
-              
+
               <div className="space-y-2">
                 <Label htmlFor="phone">Phone Number <span className="text-red-500">*</span></Label>
                 <Input
@@ -83,10 +98,9 @@ const BookingModal = ({ isOpen, onClose, roomName }: BookingModalProps) => {
                   onChange={(e) => setPhone(e.target.value)}
                   placeholder="Your contact number"
                   required
-                  className="border-hotel-teal/30 focus:border-hotel-teal"
                 />
               </div>
-              
+
               <div className="space-y-2">
                 <Label htmlFor="message">Message (Optional)</Label>
                 <Textarea
@@ -94,10 +108,10 @@ const BookingModal = ({ isOpen, onClose, roomName }: BookingModalProps) => {
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   placeholder="Any special requests or questions?"
-                  className="border-hotel-teal/30 focus:border-hotel-teal min-h-[100px]"
+                  className="min-h-[100px]"
                 />
               </div>
-              
+
               <div className="pt-4">
                 <Button
                   type="submit"
