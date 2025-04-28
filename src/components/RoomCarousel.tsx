@@ -20,7 +20,7 @@ const rooms: RoomSlide[] = [
   {
     id: 2,
     name: "Suite Room",
-    image: "/suite.jpeg",
+    image: "/sen.jpeg",
     description: "Luxurious suite with separate living area and premium furnishings for ultimate comfort."
   },
  

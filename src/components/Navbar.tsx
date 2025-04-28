@@ -1,8 +1,9 @@
-
 import { useState, useEffect } from 'react';
 import { Menu, X, Phone } from 'lucide-react';
 import { Button } from './ui/button';
 import { cn } from '@/lib/utils';
+import { Link } from 'react-router-dom';
+import { FaWhatsapp } from "react-icons/fa"; // import WhatsApp icon
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -19,6 +20,7 @@ const Navbar = () => {
 
   const scrollToSection = (id: string) => {
     setIsMenuOpen(false);
+    if (id === 'gallery') return; // Don't scroll for gallery
     const element = document.getElementById(id);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
@@ -31,17 +33,18 @@ const Navbar = () => {
       isScrolled ? 'bg-white/90 backdrop-blur-md shadow-sm py-2' : 'bg-transparent py-4'
     )}>
       <div className="container mx-auto px-4 flex items-center justify-between">
-        <a href="#" className="flex items-center">
+        <Link to="/" className="flex items-center">
           <h1 className="text-2xl font-bold text-hotel-teal font-playfair">
             Kodai Cool Stay
           </h1>
-        </a>
+        </Link>
 
         {/* Desktop Navigation */}
         <nav className="hidden lg:flex items-center space-x-8">
           <button onClick={() => scrollToSection('home')} className="font-medium hover:text-hotel-teal transition-colors">Home</button>
           <button onClick={() => scrollToSection('about')} className="font-medium hover:text-hotel-teal transition-colors">About</button>
           <button onClick={() => scrollToSection('rooms')} className="font-medium hover:text-hotel-teal transition-colors">Rooms</button>
+          <Link to="/gallery" className="font-medium hover:text-hotel-teal transition-colors">Gallery</Link>
           <button onClick={() => scrollToSection('contact')} className="font-medium hover:text-hotel-teal transition-colors">Contact</button>
           <Button 
             variant="outline" 
@@ -50,9 +53,17 @@ const Navbar = () => {
           >
             Book Now
           </Button>
-          <div className="flex items-center gap-2 text-hotel-teal">
-            <Phone size={18} />
-            <span className="font-medium">+91 9876543210</span>
+          <div className="flex items-center justify-center gap-2 text-hotel-teal mt-4">
+            <Phone size={20} />
+            <a
+              href="https://wa.me/919876543210"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 font-medium text-lg"
+            >
+              <span>+91 9876543210</span>
+              <FaWhatsapp className="text-green-500" size={20} />
+            </a>
           </div>
         </nav>
 
@@ -69,6 +80,7 @@ const Navbar = () => {
             <button onClick={() => scrollToSection('home')} className="font-medium text-xl py-3 border-b border-gray-100">Home</button>
             <button onClick={() => scrollToSection('about')} className="font-medium text-xl py-3 border-b border-gray-100">About</button>
             <button onClick={() => scrollToSection('rooms')} className="font-medium text-xl py-3 border-b border-gray-100">Rooms</button>
+            <Link to="/gallery" onClick={() => setIsMenuOpen(false)} className="font-medium text-xl py-3 border-b border-gray-100">Gallery</Link>
             <button onClick={() => scrollToSection('contact')} className="font-medium text-xl py-3 border-b border-gray-100">Contact</button>
             <Button 
               className="bg-hotel-teal text-white hover:bg-hotel-teal/90 w-full mt-4"
@@ -77,9 +89,17 @@ const Navbar = () => {
               Book Now
             </Button>
             <div className="flex items-center justify-center gap-2 text-hotel-teal mt-4">
-              <Phone size={20} />
-              <span className="font-medium text-lg">+91 9876543210</span>
-            </div>
+            <Phone size={20} />
+            <a
+              href="https://wa.me/919876543210"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 font-medium text-lg"
+            >
+              <span>+91 9876543210</span>
+              <FaWhatsapp className="text-green-500" size={20} />
+            </a>
+          </div>
           </div>
         </div>
       )}

@@ -18,10 +18,12 @@ const rooms: Room[] = [
     name: "Family Room",
     price: 5000,
     description: "Spacious accommodation perfect for families, featuring comfortable beds, modern amenities, and a warm atmosphere.",
-    features: [ "2 Queen Beds", "Private Bathroom", "Free WiFi", "Air Conditioning"],
+    features: [ " Queen Beds", , "Free WiFi", "Power Backup"],
     images: [
       "/family.jpeg",
-      "/rest.jpeg"
+      "/fa.jpeg",
+      "/fa1.jpeg",
+
      
     ]
   },
@@ -30,10 +32,13 @@ const rooms: Room[] = [
     name: "Suite Room",
     price: 5000,
     description: "Luxurious suite with separate living area and premium furnishings for the ultimate comfort and relaxation during your stay.",
-    features: [ "King Size Bed", "Separate Living Area",  "Premium Toiletries", "Air Conditioning"],
+    features: [ "King Size Bed", "Separate Living Area",  "Premium Toiletries", "Power Backup"],
     images: [
+      "/sen.jpeg",
       "/suite1.jpeg",
       "/suiter.jpeg"
+      
+
 
       
     ]

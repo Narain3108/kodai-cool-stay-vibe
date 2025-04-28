@@ -36,7 +36,7 @@ const BookingModal = ({ isOpen, onClose, roomName }: BookingModalProps) => {
     setIsSubmitting(true);
 
     try {
-      const response= await fetch('http://localhost:8000/send-booking', {
+      const response= await fetch('https://kodai-cool-stay-vibe.onrender.com/send-booking', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({ name, phone, message, })
