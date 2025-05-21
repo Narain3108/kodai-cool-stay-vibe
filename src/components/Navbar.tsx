@@ -75,34 +75,40 @@ const Navbar = () => {
 
       {/* Mobile Navigation Menu */}
       {isMenuOpen && (
-        <div className="lg:hidden fixed inset-0 bg-white z-40 pt-20 animate-slide-up">
-          <div className="container mx-auto px-4 py-6 flex flex-col space-y-6">
-            <button onClick={() => scrollToSection('home')} className="font-medium text-xl py-3 border-b border-gray-100">Home</button>
-            <button onClick={() => scrollToSection('about')} className="font-medium text-xl py-3 border-b border-gray-100">About</button>
-            <button onClick={() => scrollToSection('rooms')} className="font-medium text-xl py-3 border-b border-gray-100">Rooms</button>
-            <Link to="/gallery" onClick={() => setIsMenuOpen(false)} className="font-medium text-xl py-3 border-b border-gray-100">Gallery</Link>
-            <button onClick={() => scrollToSection('contact')} className="font-medium text-xl py-3 border-b border-gray-100">Contact</button>
-            <Button 
-              className="bg-hotel-teal text-white hover:bg-hotel-teal/90 w-full mt-4"
-              onClick={() => scrollToSection('rooms')}
-            >
-              Book Now
-            </Button>
-            <div className="flex items-center justify-center gap-2 text-hotel-teal mt-4">
-            <Phone size={20} />
-            <a
-              href="https://wa.me/919876543210"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 font-medium text-lg"
-            >
-              <span>+91 9876543210</span>
-              <FaWhatsapp className="text-green-500" size={20} />
-            </a>
-          </div>
-          </div>
-        </div>
-      )}
+  <div className="lg:hidden fixed inset-0 bg-white z-40 pt-20 animate-slide-up">
+    <div className="container mx-auto px-4 py-6 flex flex-col space-y-6">
+      <button onClick={() => scrollToSection('home')} className="w-full text-center font-medium text-xl py-3 border-b border-gray-100">Home</button>
+      <button onClick={() => scrollToSection('about')} className="w-full text-center font-medium text-xl py-3 border-b border-gray-100">About</button>
+      <button onClick={() => scrollToSection('rooms')} className="w-full text-center font-medium text-xl py-3 border-b border-gray-100">Rooms</button>
+      <Link 
+        to="/gallery" 
+        onClick={() => setIsMenuOpen(false)} 
+        className="w-full text-center font-medium text-xl py-3 border-b border-gray-100"
+      >
+        Gallery
+      </Link>
+      <button onClick={() => scrollToSection('contact')} className="w-full text-center font-medium text-xl py-3 border-b border-gray-100">Contact</button>
+      <Button 
+        className="bg-hotel-teal text-white hover:bg-hotel-teal/90 w-full mt-4"
+        onClick={() => scrollToSection('rooms')}
+      >
+        Book Now
+      </Button>
+      <div className="flex items-center justify-center gap-2 text-hotel-teal mt-4">
+        <Phone size={20} />
+        <a
+          href="https://wa.me/919876543210"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-2 font-medium text-lg"
+        >
+          <span>+91 9876543210</span>
+          <FaWhatsapp className="text-green-500" size={20} />
+        </a>
+      </div>
+    </div>
+  </div>
+)}
     </header>
   );
 };
